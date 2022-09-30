@@ -10,6 +10,7 @@ const setLocalData = (key, data) => {
     }
 }
 let arrTodos = [];
+let currentEditItemId = null;
 
 const addbtn = document.getElementById('add_btn');
 const inp = document.getElementById('todo');
@@ -29,7 +30,6 @@ const getNewTodo = (todoName) => {
 // delete todo
 
 const deleteTodo = (id) => {
-    console.log("deleted", id);
     if (arrTodos && arrTodos.length) {
         const filteredData = arrTodos.filter(el => el.id !== id);
         setLocalData(TODO_TEXT, filteredData);
@@ -41,9 +41,10 @@ const deleteTodo = (id) => {
 function editTodo(id) {
     if (id) {
         const getMatchingItem = arrTodos.filter(el => el.id === id);
-        if (getLocalData.length) {
+        if (getMatchingItem.length) {
             inp.value = getMatchingItem[0].text;
             addbtn.innerText = UPDATE_TEXT;
+            currentEditItemId = getMatchingItem[0].id;
         }
     }
 }
@@ -64,7 +65,7 @@ function renderTodos() {
             crossIcon.click = crossIcon.addEventListener('click', () => deleteTodo(todo.id));
             editButton.textContent = "edit";
             editButton.classList.add('btn', "btn-sm", "btn-primary", "edit_btn");
-            editButton.click = document.addEventListener('click', () => editTodo(todo.id));
+            editButton.click = editButton.addEventListener('click', () => editTodo(todo.id));
             spanConatiner.classList.add("span_conatiner");
             spanConatiner.appendChild(crossIcon);
             spanConatiner.appendChild(newListItem);
@@ -96,7 +97,15 @@ addbtn.addEventListener('click', (e) => {
             setLocalData(TODO_TEXT, [...getLocalData(TODO_TEXT), newTodoObject]);
         }
         else {
-
+            const currentTodo = inp.value.trim();
+            arrTodos.map(el => {
+                if (el.id === currentEditItemId) {
+                    el.text = currentTodo;
+                }
+                return el;
+            })
+            setLocalData(TODO_TEXT, arrTodos);
+            addbtn.innerText = "Save";
         }
         renderTodos();
     }
