@@ -1,0 +1,28 @@
+.col-md-8{
+    border-left:2px solid gold;
+    height: 10rem;
+    background-color: aquamarine;
+}
+
+.crossIcon{
+    color: red;
+    width: 2.5rem;
+    height: 2rem;
+    border-radius: 50% 50%;
+    cursor: pointer;
+}
+
+
+.span_conatiner{
+    margin-top: 0.3rem;
+}
+
+.crossIcon:hover{
+    color: #fff;
+    background-color: red;
+}
+
+.edit_btn{
+    margin-left: 20px;
+    height: fit-content;
+}
